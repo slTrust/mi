@@ -1,76 +1,57 @@
 # mi
 
-## vue-cli 3.0.0-beta10使用
+## 适配方案引入
 
-### 安装
-
-```
-cnpm install -g @vue/cli@3.0.0-beta.10
-```
-
-### 生成项目
+- 前身：[lib-flexible](https://github.com/amfe/lib-flexible)
+- 安装插件
 
 ```
-vue create mi
+cnpm i cssnano cssnano-preset-advanced postcss-aspect-ratio-mini postcss-cssnext postcss-import postcss-px-to-viewport postcss-url postcss-viewport-units postcss-write-svg -D
 ```
 
-```
-?Please pick a preset
-default (babel,eslint)
-Manually select features √
-```
+- 配置postcss
 
 ```
-Check the features needed for your project: (Press <space> to select, <a> to toggle all, <i> to invert selection)
-### 我们选择
-Router  √
-Vuex   √
-Linter / Formatter √
+"postcss": {
+  "plugins": {
+    "postcss-import": {},
+    "postcss-url": {},
+    "postcss-aspect-ratio-mini": {},
+    "postcss-write-svg": {
+      "utf8": false
+    },
+    "postcss-cssnext": {},
+    "postcss-px-to-viewport": {
+      "viewportWidth": 375,
+      "viewportHeight": 667,
+      "unitPrecision": 3,
+      "viewportUnit": "vw",
+      "selectorBlackList": [
+        ".ignore",
+        ".hairlines"
+      ],
+      "minPixelValue": 1,
+      "mediaQuery": false
+    },
+    "postcss-viewport-units": {},
+    "cssnano": {
+      "preset": "advanced",
+      "autoprefixer": false,
+      "postcss-zindex": false
+    }
+  }
+},
 ```
 
-```
-Pick a linter / formatter config:
-ESLint + Standard config √
-```
+- 添加buggyfill
 
 ```
-Pick additional lint features:
-Lint on save √
+<script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
+<script>
+  window.onload = function () {
+    window.viewportUnitsBuggyfill.init({
+      hacks: window.viewportUnitsBuggyfillHacks
+    })
+  }
+</script> 
 ```
-
-```
-Where do you prefer placing config for Babel, PostCSS, ESLint, etc.?
-> In dedicated config files  √
-```
-
-```
-Save this as a preset for future projects? (y/N)
-n
-```
-
-### 启动项目
-
-```
-# 已经由之前的 npm run dev 改为如下
-npm run serve 
-# 或者
-yarn serve 
-```
-
-## 官网一个大坑 3.0.0-beta10
-
-```
-vue-cli 3.0.0-beta10
-vue-cli 3.0.0-beta11
-这两个你按照上面的步骤初始化之后会报错
-意思是你的组件没注册，但是组件在路由里已经注册了，但是main.js里 没有注入路由
-```
-
-![](https://raw.githubusercontent.com/slTrust/note/master/img/mi_004_01.png)
-
-![](https://raw.githubusercontent.com/slTrust/note/master/img/mi_004_02.png)
-
-> 引入后项目初始化成功
-
-至此你已经构建了一个无配置的脚手架
-
