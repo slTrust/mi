@@ -55,3 +55,9 @@ cnpm i cssnano cssnano-preset-advanced postcss-aspect-ratio-mini postcss-cssnext
   }
 </script> 
 ```
+
+### 安装normalize.css
+
+```
+cnpm i normalize.css -S
+```
